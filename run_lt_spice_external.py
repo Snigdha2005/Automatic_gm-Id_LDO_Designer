@@ -170,7 +170,7 @@ def run_temperature_sweep(spec_file_name, cir_file_path, ltspice_exe, params, te
             f"T={i}°C : Loop Gain={loopgain:.2f} dB, fp1={fp1:.2f} Hz, Phase Margin={phase_margin:.2f} deg, "
             f"Iq={Iq_uA:.2f} uA, Iq_error={Iq_error:.2f}%, Power={P*1e3:.2f} mW, Power_error={P_error:.2f}%"
         )
-    lines = [line for line in lines if not line.lower().startswith(".temp")]
+    # lines = [line for line in lines if not line.lower().startswith(".temp")]
         
     # Save plot
     plt.figure(figsize=(8,5))
@@ -190,6 +190,15 @@ def run_temperature_sweep(spec_file_name, cir_file_path, ltspice_exe, params, te
     txt_file = os.path.join(out_dir, "temp_loopgain.txt")
     with open(txt_file, 'w') as f:
         f.write("\n".join(loopgain_txt_lines))
+    
+    with open(cir_file_path, 'r') as f:
+        lines = f.readlines()
+    
+    # Remove existing .temp lines if present
+    lines = [line for line in lines if not line.lower().startswith(".temp")]
+    lines.insert(1, ".temp " + str(27) + "\n")
+    with open(cir_file_path, 'w') as f:
+        f.writelines(lines)
     
     # print(f"Temperature sweep done. Plot saved as temp_change.png and data in temp_loopgain.txt")
 
@@ -573,6 +582,15 @@ def run_lt_spice_external(spec_file_name, gm_id_best):
         "l1": f"{chosen_L}u",
         "l2": f"{chosen_L_pmos}u"
     }
+    with open(ASC_FILE, 'r') as f:
+        lines = f.readlines()
+    
+    # Remove existing .temp lines if present
+    lines = [line for line in lines if not line.lower().startswith(".temp")]
+    lines.insert(1, ".temp " + str(27) + "\n")
+    with open(ASC_FILE, 'w') as f:
+        f.writelines(lines)
+    
     # print(params)
     raw_file = ASC_FILE.replace(".cir", ".raw")
     if os.path.exists(raw_file):
@@ -643,8 +661,8 @@ def run_lt_spice_external(spec_file_name, gm_id_best):
         # Calculate errors vs theoretical
         # -----------------------------
         loop_gain_sim = low_mag_db
-        loop_gain_error = abs(loop_gain_sim - loop_gain_theo)/loop_gain_theo * 100
-        fp1_error = abs(fp1_sim - fp1_theo)/fp1_theo * 100
+        loop_gain_error = (loop_gain_sim - loop_gain_theo)/loop_gain_theo * 100
+        fp1_error = (fp1_theo - fp1_sim)/fp1_theo * 100
         
         print("\n===== Loop Gain Simulation Analysis =====")
         print(f"Low-frequency loop gain: {loop_gain_sim:.2f} (theo: {loop_gain_theo:.2f}) -> Error: {loop_gain_error:.2f} %")
@@ -664,10 +682,10 @@ def run_lt_spice_external(spec_file_name, gm_id_best):
             "loop_gain":low_mag_db
             
         }
-    run_temperature_sweep(spec_file_name,ASC_FILE,LTSPICE_PATH,params)
     
     loopgain_analysis = analyze_loopgain(raw_file)
     combined = {**loopgain_analysis, ** params}
+    run_temperature_sweep(spec_file_name,ASC_FILE,LTSPICE_PATH,params)
     return combined
     # -----------------------------
     # Optional: Plot loop gain magnitude with fp1 and 0 dB markers
@@ -684,4 +702,4 @@ def run_lt_spice_external(spec_file_name, gm_id_best):
     # plt.legend()
     # plt.tight_layout()
     # plt.show()
-run_lt_spice_external("C:/Users/SnigdhaYS/Documents/LTSpice_LDO_Automation/specs/spec1.xlsx", 10)
+# run_lt_spice_external("C:/Users/SnigdhaYS/Documents/LTSpice_LDO_Automation/specs/spec1.xlsx", 10.323232323232324)

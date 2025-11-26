@@ -115,7 +115,7 @@ def plot_trends(gm_id_trend, spec_file_name):
     # AC Performance
     # -----------------------------
     save_plot("loopgain", "Loop Gain (linear)", "Loop Gain vs gm/Id", "loopgain.png")
-    save_plot("fp1", "fp1 (KHz)", "Simulation fp1 vs gm/Id", "fp1_theoretical.png")
+    save_plot("fp1", "fp1 (Hz)", "Simulation fp1 vs gm/Id", "fp1_theoretical.png")
     save_plot("Iq_sim", "Iq_sim (uA)", "Simulated Iq vs gm/Id", "Iq_sim.png")
     save_plot("Power_sim", "Power_sim (uW)", "Simulated Power vs gm/Id", "Power_sim.png")
     
@@ -274,6 +274,10 @@ def best_gm_id_external(spec_file_name):
     dropout = round(dropout, 3)
     fom = spec["fom"]
     it = spec["iterations"]
+    # print(loop_gain)
+    # print(dropout)
+    # print(fom)
+    # print(it)
     # -----------------------------
     # Determine initial gm/Id sweep range
     # -----------------------------
@@ -287,7 +291,7 @@ def best_gm_id_external(spec_file_name):
     gm_id_start = 2/vds  # start value for sweep
     gm_id_end = MAX_GM_ID
     gm_id_vals = np.linspace(gm_id_start, gm_id_end, int(it))  # try 6 values
-
+    # print("gm_id_vals", gm_id_vals)
     best_gm_id = None
     min_error = np.inf
     best_results = None
@@ -320,6 +324,7 @@ def best_gm_id_external(spec_file_name):
         # -----------------------------
         # PMOS Pass FET sizing
         # -----------------------------
+        # print(gm_id_target)
         gmro_file = build_filename("PGMRo", vds, "P")
         idw_file  = build_filename("PIDW", vds, "P")
         ft_file   = build_filename("PFT", vds, "P")
@@ -448,7 +453,7 @@ def best_gm_id_external(spec_file_name):
         raw_file = run_ltspice_cir(LTSPICE_PATH, ASC_FILE)
         meth = all_in_saturation(LOG_FILE)
         if meth["all_in_saturation"] == False:
-            break
+            continue
         # -----------------------------
         # Analyze results
         # -----------------------------
@@ -481,9 +486,10 @@ def best_gm_id_external(spec_file_name):
         gm_id_trend["Iq_sim"].append(meth["m2_id_uA"])
         gm_id_trend["Power_sim"].append(meth["m2_id_uA"]*spec["Vin"])
         
-        # #print(loop_gain_error)
-        # #print(fp1_error)
-        # #print(f"Total error = {total_error:.2f} %")
+        # print(loop_gain_error)
+        # print(fp1_error)
+        # print(phase_margin_sim)
+        # print(f"Total error = {total_error:.2f} %")
         
         if total_error < min_error and total_error > 0 and phase_margin_sim >= 45:
             min_error = total_error
@@ -499,11 +505,13 @@ def best_gm_id_external(spec_file_name):
                 "fp1_error": fp1_error,
                 "Iq_sim": meth["m2_id_uA"],
                 "Iq_error": (spec["Iquiescent"]/2 - meth["m2_id_uA"]) * 100 /spec["Iquiescent"],
-                "Power": meth["m2_id_uA"] * spec["Vin"]
+                "Power": meth["m2_id_uA"] * spec["Vin"],
+                "l1": chosen_L,
+                "l2": chosen_L_pmos
             }
     plot_trends(gm_id_trend, spec_file_name)
-    # #print("\n===== Best gm/Id Results =====")
-    # #print(best_results)
+    # print("\n===== Best gm/Id Results =====")
+    # print(best_results)
     return best_results
 
 # best_gm_id_external("specs/spec1.xlsx")

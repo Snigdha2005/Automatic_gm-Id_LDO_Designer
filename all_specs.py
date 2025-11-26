@@ -156,9 +156,11 @@ def run_all_specs():
             spice_time = time.time() - t1
             if best_dict is None:
                 final_dict = sim_dict
+                print(final_dict)
                 Best_or_default = "Default"
             else:
                 final_dict = {**best_dict, **sim_dict}
+                print(final_dict)
                 Best_or_default = "Best"
             # ------------------------------
             # Step 4: Save as CSV
@@ -171,7 +173,7 @@ def run_all_specs():
             gm_times.append(gm_time)
             spice_times.append(spice_time)
             total_times.append(gm_time + spice_time)
-
+            
         # ==========================================================
         #  PLOT RUNTIMES
         # ==========================================================
@@ -198,6 +200,4 @@ def run_all_specs():
         plt.close()
 
         print(f"Runtime plot saved → {plot_path}")
-
-
 run_all_specs()

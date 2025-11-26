@@ -190,6 +190,15 @@ def run_temperature_sweep(spec_file_name, cir_file_path, ltspice_exe, params, te
     with open(txt_file, 'w') as f:
         f.write("\n".join(loopgain_txt_lines))
     
+    with open(cir_file_path, 'r') as f:
+        lines = f.readlines()
+    
+    # Remove existing .temp lines if present
+    lines = [line for line in lines if not line.lower().startswith(".temp")]
+    lines.insert(1, ".temp " + str(27) + "\n")
+    with open(cir_file_path, 'w') as f:
+        f.writelines(lines)
+        
     ##print(f"Temperature sweep done. Plot saved as temp_change.png and data in temp_loopgain.txt")
 
 
@@ -628,7 +637,7 @@ def run_lt_spice_internal(spec_file_name, gm_id_best):
     cc_cgd = (10**6) / (wp1 * rodiff * gmro)
     cgg = cgs_cgd
     cgd = 0.33*cgg
-    Cc = abs(cc_cgd - cgd)
+    Cc = cc_cgd - cgd
     #print(rodiff)
     #print(cgd)
     #print(cc_cgd)
@@ -650,6 +659,15 @@ def run_lt_spice_internal(spec_file_name, gm_id_best):
     }
     #print(params)
     # updated_asc = update_ltspice_params(ASC_FILE, params)
+    with open(ASC_FILE, 'r') as f:
+        lines = f.readlines()
+    
+    # Remove existing .temp lines if present
+    lines = [line for line in lines if not line.lower().startswith(".temp")]
+    lines.insert(1, ".temp " + str(27) + "\n")
+    with open(ASC_FILE, 'w') as f:
+        f.writelines(lines)
+    
     raw_file = ASC_FILE.replace(".cir", ".raw")
     if os.path.exists(raw_file):
         os.remove(raw_file)
@@ -663,7 +681,6 @@ def run_lt_spice_internal(spec_file_name, gm_id_best):
     # #print(loopgain_analysis)
     # freq_low, vout_low, gain_db = get_low_freq_gain(raw_file)
     # #print(f"\nLow-frequency V(out): {vout_low:.6f} V ({gain_db:.2f} dB) at {freq_low} Hz")
-    run_temperature_sweep(spec_file_name,ASC_FILE,LTSPICE_PATH,params)
     
 
     # Call plotting function
@@ -699,6 +716,7 @@ def run_lt_spice_internal(spec_file_name, gm_id_best):
     # -----------------------------
     # Analyze Loop Gain Simulation
     # -----------------------------
+    run_temperature_sweep(spec_file_name,ASC_FILE,LTSPICE_PATH,params)
     
 
     # loopgain_analysis = analyze_loopgain(raw_file, fp1, spec["PSRR"])

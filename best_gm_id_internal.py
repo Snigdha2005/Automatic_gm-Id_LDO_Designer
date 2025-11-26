@@ -116,7 +116,7 @@ def plot_trends(gm_id_trend, spec_file_name):
     # AC Performance
     # -----------------------------
     save_plot("loopgain", "Loop Gain (linear)", "Loop Gain vs gm/Id", "loopgain.png")
-    save_plot("fp1", "fp1 (KHz)", "Simulation fp1 vs gm/Id", "fp1_theoretical.png")
+    save_plot("fp1", "fp1 (Hz)", "Simulation fp1 vs gm/Id", "fp1_theoretical.png")
     save_plot("Cc", "Cc (uF)", "Cc vs gm/Id", "Cc.png")
     save_plot("rodiff", "Rodiff (ohm)", "Theoretical Rodiff vs gm/Id", "rodiff.png")
     save_plot("Iq_sim", "Iq_sim (uA)", "Simulated Iq vs gm/Id", "Iq_sim.png")
@@ -321,7 +321,7 @@ def best_gm_id_internal(spec_file_name):
     }
 
     for gm_id_target in gm_id_vals:
-        # #print(f"\nTrying gm/Id target = {gm_id_target:.3f}")
+        # print(f"\nTrying gm/Id target = {gm_id_target:.3f}")
         
         # -----------------------------
         # PMOS Pass FET sizing
@@ -370,7 +370,7 @@ def best_gm_id_internal(spec_file_name):
         fp1 = wp1 / (2 * np.pi)
         ota_gmro_needed = ota_gain * 2
         
-        # #print("gmro:",gmro)
+        print("gmro:",ota_gmro_needed)
         # -----------------------------
         # OTA NMOS sizing
         # -----------------------------
@@ -395,6 +395,7 @@ def best_gm_id_internal(spec_file_name):
                 chosen_L = L
                 break
         if chosen_L is None:
+            # print("1")
             continue
         
         col_X = f"L___{int(chosen_L*1e3)}nm_X"
@@ -436,6 +437,7 @@ def best_gm_id_internal(spec_file_name):
                 break
 
         if chosen_L_pmos is None:
+            # print("2")
             continue
 
         col_X = f"L___{int(chosen_L_pmos*1e3)}nm_X"
@@ -453,8 +455,8 @@ def best_gm_id_internal(spec_file_name):
         cc_cgd = (10**6) / (wp1 * rodiff * gmro)
         cgg = cgs_cgd
         cgd = 0.33*cgg
-        Cc = abs(cc_cgd - cgd)
-
+        Cc = cc_cgd - cgd
+        # print(Cc)
         # -----------------------------
         # Run LTspice simulation
         # -----------------------------
@@ -479,7 +481,8 @@ def best_gm_id_internal(spec_file_name):
         raw_file = run_ltspice_cir(LTSPICE_PATH, ASC_FILE)
         meth = all_in_saturation(LOG_FILE)
         if meth["all_in_saturation"] == False:
-            break
+            print("sat", meth["all_in_saturation"])
+            continue
         # -----------------------------
         # Analyze results
         # -----------------------------
@@ -513,11 +516,11 @@ def best_gm_id_internal(spec_file_name):
         gm_id_trend["rodiff"].append(rodiff)
         gm_id_trend["Iq_sim"].append(meth["m2_id_uA"])
         gm_id_trend["Power_sim"].append(meth["m2_id_uA"]*spec["Vin"])
-        #print(loop_gain_error)
-        #print(fp1_error)
-        #print(f"Total error = {total_error:.2f} %")
-        
-        if total_error < min_error and total_error > 0 and phase_margin_sim >= 45:
+        # print(loop_gain_error)
+        # print(fp1_error)
+        # print(f"Total error = {total_error:.2f} %")
+        # print(phase_margin_sim)
+        if total_error < min_error and total_error > 0 and phase_margin_sim >= 45 and Cc > 0:
             min_error = total_error
             best_gm_id = gm_id_target
             best_results = {
@@ -538,7 +541,7 @@ def best_gm_id_internal(spec_file_name):
                 "Power": meth["m2_id_uA"] * spec["Vin"]
             }
     plot_trends(gm_id_trend, spec_file_name)
-    #print("\n===== Best gm/Id Results =====")
-    #print(best_results)
+    # print("\n===== Best gm/Id Results =====")
+    # print(best_results)
     return best_results
 # best_gm_id_internal("specs/spec3.xlsx")

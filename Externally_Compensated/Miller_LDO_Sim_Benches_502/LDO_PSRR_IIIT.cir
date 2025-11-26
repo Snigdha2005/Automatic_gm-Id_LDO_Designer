@@ -21,13 +21,13 @@ C2 OUT 0 {Cload}
 .op
 .param ibias=50.0u
 .param Iload=10.0m
-.param l1=0.72u
-.param l2=0.54u
+.param l1=0.54u
+.param l2=0.36u
 ;tran 400u
 * Please set the parameters in all the .param statements below
-.param Wload=11.432354891047549u
-.param Wdiff=3.861823542677526u
-.param Wpass=1133.1343651728623u
+.param Wload=7.554208840548477u
+.param Wdiff=3.032859390350214u
+.param Wpass=1205.7710162232954u
 .param Cload=1.0u
 * Also, set the capacitance values
 * You can also use the middlebrook mthod to find the stability.

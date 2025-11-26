@@ -1,5 +1,5 @@
 * C:\Users\SnigdhaYS\Documents\LTSpice_LDO_Automation\Internally_Compensated\Miller_LDO_Sim_Benches_502\LDO_loopgain_IIIT.asc
-.temp 125
+.temp 27
 M1 OTAout Vref N003 N003 nmos292p L=l1 W=Wdiff
 M2 N001 N002 N003 N003 nmos292p L=l1 W=Wdiff
 M3 N003 Bias 0 0 nmos292p L=1u W=10u
@@ -26,14 +26,14 @@ C3 N004 0 1
 .ac dec 20 10 1G
 .op
 .param ibias=0.5u
-.param Iload=0.5m
-.param l1=0.54u
-.param l2=0.36u
+.param Iload=1.0m
+.param l1=1.26u
+.param l2=0.72u
 ;tran 400u
 * Please set the parameters in all the .param statements below
-.param Wload=1.1520469365115864u
-.param Wdiff=0.3339205773196117u
-.param Wpass=2056.6425423869114u
+.param Wload=0.8022373012367914u
+.param Wdiff=0.32712894007182364u
+.param Wpass=600.8020892921824u
 .param Cload=0.002u
 * Also, set the capacitance values
 * You can also use the middlebrook mthod to find the stability.
@@ -43,6 +43,6 @@ C3 N004 0 1
 * AC analysis
 .param Vin=0.8
 .param Vout=0.6
-.param Cc=5.059075035383994e-07u
+.param Cc=5.99831199946929e-07u
 .backanno
 .end
