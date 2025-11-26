@@ -1,0 +1,3 @@
+T=-40°C : Loop Gain=64.61 dB, fp1=1412.54 Hz, Phase Margin=53.39 deg, Iq=25.07 uA, Iq_error=-0.28%, Power=35098.35 mW, Power_error=-0.28%
+T=27°C : Loop Gain=63.28 dB, fp1=1258.93 Hz, Phase Margin=53.27 deg, Iq=25.07 uA, Iq_error=-0.29%, Power=35101.67 mW, Power_error=-0.29%
+T=125°C : Loop Gain=61.18 dB, fp1=1258.93 Hz, Phase Margin=51.83 deg, Iq=25.05 uA, Iq_error=-0.20%, Power=35070.35 mW, Power_error=-0.20%

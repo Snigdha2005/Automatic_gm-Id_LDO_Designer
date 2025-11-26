@@ -1,0 +1,112 @@
+Circuit: * C:\Users\SnigdhaYS\Documents\LTSpice_LDO_Automation\Externally_Compensated\Miller_LDO_Sim_Benches_502\LDO_loopgain_IIIT_updated.asc
+
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-005
+Gmin = 1.6455e-006
+Gmin = 1.76685e-007
+Gmin = 1.89714e-008
+Gmin = 2.03704e-009
+vernier = 0.5
+Gmin = 3.79731e-010
+vernier = 0.666667
+Gmin = 9.40124e-011
+vernier = 0.888888
+vernier = 1
+Gmin = 1.15517e-011
+Gmin = 1.24035e-012
+Gmin = 1.33182e-013
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
+
+Semiconductor Device Operating Points:
+                        --- BSIM3 MOSFETS ---
+Name:       mpass        m5          m4          m8          m7
+Model:    pmos292p    pmos292p    pmos292p    nmos292p    nmos292p
+Id:       -2.05e-03   -2.42e-05   -2.47e-05    5.00e-05    5.11e-05
+Vgs:      -5.39e-01   -6.53e-01   -6.53e-01    6.24e-01    6.24e-01
+Vds:      -3.95e-01   -5.39e-01   -6.53e-01    6.24e-01    1.00e+00
+Vbs:       0.00e+00    0.00e+00    0.00e+00    0.00e+00    0.00e+00
+Vth:      -4.85e-01   -4.83e-01   -4.83e-01    4.21e-01    4.20e-01
+Vdsat:    -8.16e-02   -1.50e-01   -1.50e-01    1.56e-01    1.56e-01
+Gm:        3.73e-02    2.56e-04    2.62e-04    4.83e-04    4.91e-04
+Gds:       5.98e-04    5.16e-06    4.28e-06    3.32e-06    2.61e-06
+Gmb        1.11e-02    7.59e-05    7.75e-05    1.34e-04    1.36e-04
+Cbd:       0.00e+00    0.00e+00    0.00e+00    0.00e+00    0.00e+00
+Cbs:       0.00e+00    0.00e+00    0.00e+00    0.00e+00    0.00e+00
+Cgsov:     1.04e-12    2.35e-15    2.35e-15    8.58e-15    8.58e-15
+Cgdov:     1.04e-12    2.35e-15    2.35e-15    8.58e-15    8.58e-15
+Cgbov:     1.21e-19    1.21e-19    1.21e-19    9.66e-19    9.66e-19
+dQgdVgb:   3.08e-12    7.32e-15    7.32e-15    8.47e-14    8.47e-14
+dQgdVdb:  -1.04e-12   -2.34e-15   -2.34e-15   -8.48e-15   -8.46e-15
+dQgdVsb:  -1.93e-12   -4.84e-15   -4.84e-15   -7.22e-14   -7.21e-14
+dQddVgb:  -1.40e-12   -3.36e-15   -3.36e-15   -3.56e-14   -3.56e-14
+dQddVdb:   1.04e-12    2.35e-15    2.34e-15    8.53e-15    8.51e-15
+dQddVsb:   4.78e-13    1.32e-15    1.32e-15    3.56e-14    3.55e-14
+dQbdVgb:  -2.75e-13   -6.05e-16   -6.06e-16   -1.35e-14   -1.35e-14
+dQbdVdb:  -3.51e-16   -1.05e-18   -4.66e-19   -9.36e-18    1.04e-17
+dQbdVsb:  -6.24e-14   -1.49e-16   -1.48e-16   -7.52e-15   -7.51e-15
+
+Name:        m3          m2          m1
+Model:    nmos292p    nmos292p    nmos292p
+Id:        4.89e-05    2.47e-05    2.42e-05
+Vgs:       6.24e-01    6.27e-01    6.23e-01
+Vds:       3.77e-01    3.70e-01    4.84e-01
+Vbs:       0.00e+00    0.00e+00    0.00e+00
+Vth:       4.21e-01    4.37e-01    4.37e-01
+Vdsat:     1.55e-01    1.46e-01    1.44e-01
+Gm:        4.73e-04    2.52e-04    2.51e-04
+Gds:       6.02e-06    3.94e-06    2.66e-06
+Gmb        1.31e-04    6.97e-05    6.94e-05
+Cbd:       0.00e+00    0.00e+00    0.00e+00
+Cbs:       0.00e+00    0.00e+00    0.00e+00
+Cgsov:     8.58e-15    3.43e-15    3.43e-15
+Cgdov:     8.58e-15    3.43e-15    3.43e-15
+Cgbov:     9.66e-19    6.86e-19    6.86e-19
+dQgdVgb:   8.49e-14    2.62e-14    2.61e-14
+dQgdVdb:  -8.61e-15   -3.42e-15   -3.39e-15
+dQgdVsb:  -7.22e-14   -2.16e-14   -2.15e-14
+dQddVgb:  -3.58e-14   -1.11e-14   -1.11e-14
+dQddVdb:   8.65e-15    3.44e-15    3.42e-15
+dQddVsb:   3.56e-14    1.01e-14    1.01e-14
+dQbdVgb:  -1.34e-14   -3.90e-15   -3.93e-15
+dQbdVdb:  -1.25e-16   -3.19e-17   -8.90e-18
+dQbdVsb:  -7.58e-15   -2.02e-15   -2.02e-15
+
+
+
+Date: Fri Nov 14 21:33:13 2025
+Total elapsed time: 0.028 seconds.
+
+tnom = 27
+temp = 27
+method = trap
+totiter = 566
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 0
+matrix size = 12
+fillins = 9
+solver = Normal
+Matrix Compiler1:      64 opcodes
+Matrix Compiler2: off  [0.1]/0.1/0.2
+

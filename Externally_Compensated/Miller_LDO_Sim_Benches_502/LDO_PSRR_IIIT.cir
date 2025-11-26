@@ -1,0 +1,41 @@
+* C:\Users\SnigdhaYS\Documents\LTSpice_LDO_Automation\Externally_Compensated\Miller_LDO_Sim_Benches_502\LDO_PSRR_IIIT.asc
+M1 OTAout Vref N002 N002 nmos292p L=l1 W=Wdiff
+M2 N001 OUT N002 N002 nmos292p L=l1 W=Wdiff
+M3 N002 Bias 0 0 nmos292p L=1u W=10u
+M4 N001 N001 Vdd Vdd pmos292p L=l2 W=Wload
+M5 OTAout N001 Vdd Vdd pmos292p L=l2 W=Wload
+MPass OUT OTAout Vdd Vdd pmos292p L=0.18u W=Wpass
+M7 OUT Bias 0 0 nmos292p L=1u W=10u
+V1 Vdd 0 {Vin} AC 1
+V2 Vref 0 {Vout}
+M8 Bias Bias 0 0 nmos292p L=1u W=10u
+I1 Vdd Bias {ibias}
+Iload OUT 0 {Iload}
+C2 OUT 0 {Cload}
+.model NMOS NMOS
+.model PMOS PMOS
+.lib C:\Users\SnigdhaYS\Documents\LTspiceXVII\lib\cmp\standard.mos
+.include C:\Users\SnigdhaYS\Documents\LTSpice_LDO_Automation\models_292p.txt
+;.step param Cc 1p 20p 10p
+.ac dec 20 10 1G
+.op
+.param ibias=50.0u
+.param Iload=10.0m
+.param l1=0.72u
+.param l2=0.54u
+;tran 400u
+* Please set the parameters in all the .param statements below
+.param Wload=11.432354891047549u
+.param Wdiff=3.861823542677526u
+.param Wpass=1133.1343651728623u
+.param Cload=1.0u
+* Also, set the capacitance values
+* You can also use the middlebrook mthod to find the stability.
+* Please set the parameters in all the .param statements below
+* The method here of breaking the loop and evaluating loop gain works well for a high impedance node, but not always.
+* Middlebrook method is the best way to go. You can find an example in the educational folder of examples in LTspice folder.
+* AC analysis
+.param Vin=1.4
+.param Vout=1.0
+.backanno
+.end
